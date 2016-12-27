@@ -63,5 +63,8 @@
   some text...
   ```
 
+## Thanks
+The code was written after i read this [article][ivanzuzak.info],then I thank the author for the idea.
 
+ [ivanzuzak.info]: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
  [example_issue]: https://github.com/gioditalia/gioditalia.github.io/issues/1
