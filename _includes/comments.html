@@ -1,0 +1,50 @@
+{% if page.issueID %}
+
+<div class="wrapper">
+ <div id=comments>
+   <h2>Comments</h2>
+   <div id="header">
+     Want to leave a comment? Visit <a href="https://github.com/{{site.github_username}}/{{site.repository_name}}/issues/{{page.issueID}}#new_comment_field"> this post's issue page on GitHub</a> (you'll need a GitHub account. What? Like you already don't have one?!).
+   </div>
+  </div>
+ </div>
+
+<script>
+  var getJSON = function(url, successHandler, errorHandler) {
+     var xhr = typeof XMLHttpRequest != 'undefined'
+       ? new XMLHttpRequest()
+       : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('get', url, true);
+    xhr.onreadystatechange = function() {
+    var status;
+    var data;
+    if (xhr.readyState == 4) {
+    status = xhr.status;
+    if (status == 200) {
+      data = JSON.parse(xhr.responseText);
+      successHandler && successHandler(data);
+    }
+  }
+};
+xhr.send();
+};
+
+
+getJSON('https://api.github.com/repos/{{site.github_username}}/{{site.repository_name}}/issues/{{page.issueID}}/comments',
+  function(data){
+    var comments = "";
+    for (i = 0; i < data.length; i++) {
+      //add avatar
+      comments += '<a href="'+data[i].user.html_url+'" target="_blank"><img src="'+data[i].user.avatar_url+'"></a>';
+      //add username and link to profile page
+      comments +='  <a href="'+data[i].html_url+'" target="_blank">'+data[i].user.login+' - '+data[i].updated_at+'</a>';
+      //add comment
+      comments += '<p>'+data[i].body+'</p>';
+    }
+    document.getElementById('comments').innerHTML += comments;
+  }
+);
+
+</script>
+
+{% endif %}
